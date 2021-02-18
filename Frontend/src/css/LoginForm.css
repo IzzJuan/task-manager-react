@@ -1,0 +1,112 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: montserrat, sans-serif;
+}
+
+input, button{
+    appearance: none;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+form{
+    display: block;
+    position: relative;
+}
+
+form:after{
+    content: '';
+    display: block;
+    position: absolute;
+    top: -5px;
+    left: -5x;
+    right: -5px;
+    bottom: -5px;
+    z-index: 1;
+    background-image: linear-gradient(to bottom right, #FFCE00, #FE4880);
+}
+
+form .form-inner{
+    position: relative;
+    display: block;
+    background-color: #161A2B;
+    padding: 30px;
+    z-index: 2;
+    border-radius: 25px;
+}
+
+form .form-inner h2{
+    color: #FFF;
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+form .form-inner .form-group{
+    display: block;
+    width: 300px;
+    margin-bottom: 15px;
+}
+
+.form-inner .form-group label{
+    display: block;
+    color: #FFF;
+    font-size: 12px;
+    margin-bottom: 5px;
+    transition: 0.4s;
+}
+
+.form-inner .form-group:focus-within label{
+    color: #FE4880;
+}
+
+form .form-inner .form-group input{
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #F8F8F8;
+    border-radius: 8px;
+    transition: 0.4s;
+}
+
+form .form-inner .form-group input:focus{
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2 );
+}
+
+form .form-inner input[type="submit"]{
+    display: inline;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-image: linear-gradient(to right, #E73C7E 25%, #EE7752 );
+    background-size: 200%;
+    background-position: 0%;
+    transition: 0.4s;
+    color: #FFF;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+form .form-inner input[type="submit"]:hover{
+    background-position: 100% 0%;
+}
+
+form .form-inner input[type="button"]{
+    display: inline;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-image: linear-gradient(to left, #E73C7E 25%, #EE7752 );
+    background-size: 200%;
+    background-position: 0%;
+    transition: 0.4s;
+    color: #FFF;
+    font-weight: 700;
+    cursor: pointer;
+    margin-left: 40%;
+}
+
+form .form-inner input[type="button"]:hover{
+    background-position: 100% 0%;
+}
