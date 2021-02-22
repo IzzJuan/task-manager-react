@@ -35,19 +35,18 @@ function TodoList() {
         setTodos(newTodos);
     }
 
-    const updateTodo = (todoId, newValue) => {
-        if (!newValue.todoName || /^\s*$/.test(newValue.todoName)) {
+    const updateTodo = (todoId, editedTodo) => {
+        if (!editedTodo.todoName || /^\s*$/.test(editedTodo.todoName)) {
             return;
         }
-        console.log(newValue);
-        setTodos(prev => prev.map(item => (item._id === todoId ? newValue : item)))
+        setTodos(prev => prev.map(item => (item._id === todoId ? editedTodo : item)))
         fetch(`http://localhost:8080/update-todo`, {
             method: 'POST',
             body: JSON.stringify({
-                _id: newValue._id,
-                todoName: newValue.todoName,
-                todoPriority: newValue.todoPriority,
-                todoImg: newValue.todoImg
+                _id: editedTodo._id,
+                todoName: editedTodo.todoName,
+                todoPriority: editedTodo.todoPriority,
+                todoImg: editedTodo.todoImg
             }),
             headers: {
                 'Content-Type': 'application/json'

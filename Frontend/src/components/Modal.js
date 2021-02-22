@@ -19,7 +19,6 @@ function Modal(props) {
     const [message, setMessage] = useState('');
     const [uploadPercentage, setUploadPercentage] = useState(0);
 
-
     useEffect(() => {
         if (props.edit.todoPriority === 'Baja') {
             setColorButton({ color: 'Green', priority: 'Baja' })
@@ -28,7 +27,18 @@ function Modal(props) {
         } else {
             setColorButton({ color: 'Red', priority: 'Alta' })
         }
-    }, [])
+    }, [props.edit.todoPriority])
+
+    const buttonPriority = () => {
+        if (colorButton.color === 'Green') {
+            setColorButton({ color: 'Yellow', priority: 'Media' })
+        } else if (colorButton.color === 'Yellow') {
+            setColorButton({ color: 'Red', priority: 'Alta' })
+        } else {
+            setColorButton({ color: 'Green', priority: 'Baja' })
+        }
+
+    }
 
     const onChange = (e) => {
         setFile(e.target.files[0]);
@@ -56,32 +66,15 @@ function Modal(props) {
         } catch (error) {
             setMessage('Hubo un error con el servidor')
         }
-
     }
 
-
-    const buttonPriority = () => {
-        if (colorButton.color === 'Green') {
-            setColorButton({ color: 'Yellow', priority: 'Media' })
-        } else if (colorButton.color === 'Yellow') {
-            setColorButton({ color: 'Red', priority: 'Alta' })
-        } else {
-            setColorButton({ color: 'Green', priority: 'Baja' })
-        }
-
-    }
 
     const handleChange = (e) => {
         setInput(e.target.value);
     }
 
-    const handleUpdateSubmit = (e) => {
+    const editTodo = (e) => {
         e.preventDefault();
-        addTodo();
-    };
-
-    const addTodo = () => {
-
         props.onSubmit({
             _id: props.edit._id,
             todoName: input,
@@ -99,18 +92,20 @@ function Modal(props) {
         <>
             <div className='OVERLAY_STYLE'></div>
             <div className='MODAL_STYLES'>
-                <form className='todo-form'>
-                    <input
-                        type='text'
-                        placeholder='Editar una tarea'
-                        value={input} name='text'
-                        className='todo-input'
-                        onChange={handleChange}
-                        ref={inputRef}
-                    />
-                    <button type='button' className='todo-button' onClick={props.onClose, handleUpdateSubmit}>Actualizar</button>
-                </form>
-
+                <Fragment>
+                    <form className='todo-form'>
+                        <input
+                            type='text'
+                            placeholder='Editar una tarea'
+                            value={input} name='text'
+                            className='todo-input'
+                            onChange={handleChange}
+                            ref={inputRef}
+                        />
+                        {/* eslint-disable-next-line no-sequences*/}
+                        <button className='todo-button' onClick={props.onClose, editTodo}>Actualizar</button>
+                    </form>
+                </Fragment>
                 <Fragment>
                     {message ? <Message msg={message} /> : null}
                     <form className='modalForm' onSubmit={onSubmit}>
@@ -119,7 +114,7 @@ function Modal(props) {
                                 <h3>Prioridad</h3>
                             </div>
                             <div className='col-sm'>
-                                <a onClick={() => buttonPriority()} className={`ButtonUI ${colorButton.color}`}>{colorButton.priority}</a>
+                                <button type="button" onClick={() => buttonPriority()} className={`ButtonUI ${colorButton.color}`}>{colorButton.priority}</button>
                             </div>
                         </div>
                         <div className='row mb-3'>
@@ -127,7 +122,7 @@ function Modal(props) {
                                 <h3>Expiración</h3>
                             </div>
                             <div className='col-sm'>
-                                <input type="date" class="datepicker-input" />
+                                <input type="date" className="datepicker-input" />
                             </div>
                         </div>
                         <div className='row mb-3'>
@@ -147,7 +142,7 @@ function Modal(props) {
                             {uploadedFile ? <div className='row mt-5'>
                                 <div className='col-md-6 m-auto'>
                                     <h3 className='text-center'>{uploadedFile.fileName}</h3>
-                                    <img style={{ width: '100%' }} src={uploadedFile.filePath} />
+                                    <img style={{ width: '100%' }} src={uploadedFile.filePath} alt='Imagen de un todo' />
                                 </div>
                             </div> : null}
                         </div>

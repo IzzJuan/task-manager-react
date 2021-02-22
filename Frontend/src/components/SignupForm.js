@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
@@ -27,13 +27,11 @@ function SignupForm() {
             }
         }).then(res => res.json())
             .then(res => {
-                if (res.newUser) {
+                console.log(res);
+                if (res._id) {
                     cookies.set('userId', res._id, { path: "/" });
                     cookies.set('userName', res.name, { path: "/" });
                     cookies.set('userEmail', res.email, { path: "/" });
-                    console.log(cookies.get('userId'));
-                    console.log(cookies.get('userName'));
-                    console.log(cookies.get('userEmail'));
                     setUser({
                         name: User.name,
                         email: User.email

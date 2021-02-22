@@ -5,7 +5,7 @@ import Modal from './Modal'
 
 function Todo({ todos, completeTodo, removeTodo, updateTodo }) {
 
-    const [edit, setEdit] = useState({
+    const [editTodo, setEditTodo] = useState({
         _id: null,
         todoName: '',
         userId: '',
@@ -14,17 +14,20 @@ function Todo({ todos, completeTodo, removeTodo, updateTodo }) {
         modal: false
     });
 
-    const submitUpdate = (value) => {
-        console.log(value);
-        updateTodo(edit._id, value);
-        setEdit({
+    const submitUpdate = (editedTodo) => {
+        updateTodo(editTodo._id, editedTodo);
+        setEditTodo({
             _id: null,
-            value: ''
+            todoName: '',
+            userId: '',
+            todoPriority: '',
+            todoImg: '',
+            modal: false
         })
     }
 
     return <>
-        {edit._id ? (<Modal edit={edit} onClose={() => setEdit({ modal: false })} onSubmit={submitUpdate} />) : null}
+        {editTodo.modal ? (<Modal edit={editTodo} onClose={() => setEditTodo({ modal: false })} onSubmit={submitUpdate} />) : null}
         {todos.map((todo, index) => (
             <div className={todo.isComplete ? 'todo-row complete' : 'todo-row'} key={index}>
 
@@ -34,7 +37,7 @@ function Todo({ todos, completeTodo, removeTodo, updateTodo }) {
                 <div className='icons'>
                     <RiCloseCircleLine onClick={() => removeTodo(todo._id)}
                         className='delete-icon' />
-                    <TiEdit onClick={() => setEdit({ _id: todo._id, todoName: todo.todoName, userId: todo.userId, todoPriority: todo.todoPriority, todoImg: todo.todoImg, modal: true })}
+                    <TiEdit onClick={() => setEditTodo({ _id: todo._id, todoName: todo.todoName, userId: todo.userId, todoPriority: todo.todoPriority, todoImg: todo.todoImg, modal: true })}
                         className='edit-icon' />
                 </div>
 
