@@ -28,10 +28,12 @@ function SignupForm() {
         }).then(res => res.json())
             .then(res => {
                 if (res.newUser) {
-                    cookies.set('id', res.id, { path: "/" });
-                    console.log(cookies.get('id'));
-                    cookies.set('name', User.name, { path: "/" });
-                    cookies.set('email', User.email, { path: "/" });
+                    cookies.set('userId', res._id, { path: "/" });
+                    cookies.set('userName', res.name, { path: "/" });
+                    cookies.set('userEmail', res.email, { path: "/" });
+                    console.log(cookies.get('userId'));
+                    console.log(cookies.get('userName'));
+                    console.log(cookies.get('userEmail'));
                     setUser({
                         name: User.name,
                         email: User.email
@@ -65,7 +67,7 @@ function SignupForm() {
                         <input type='password' name='password' id='password' onChange={(e) => setUser({ ...user, password: e.target.value })} value={user.password || ''} />
                     </div>
                     <input type='submit' value='Signup' />
-                    {/*<input type="button" onclick={history.push("/")} value="Go to Login" />*/}
+                    <input type="button" onClick={() => { history.push("/") }} value="Go to Login" />
                 </div>
             </form>
         </div>

@@ -1,41 +1,46 @@
 import React, { useState } from 'react'
 import { RiCloseCircleLine } from 'react-icons/ri'
 import { TiEdit } from 'react-icons/ti'
-import TodoForm from './TodoForm';
+import Modal from './Modal'
 
 function Todo({ todos, completeTodo, removeTodo, updateTodo }) {
+
     const [edit, setEdit] = useState({
-        id: null,
-        value: ''
+        _id: null,
+        todoName: '',
+        userId: '',
+        todoPriority: '',
+        todoImg: '',
+        modal: false
     });
 
-    const submitUpdate = value => {
-        updateTodo(edit.id, value);
+    const submitUpdate = (value) => {
+        console.log(value);
+        updateTodo(edit._id, value);
         setEdit({
-            id: null,
+            _id: null,
             value: ''
         })
     }
 
-    if (edit.id) {
-        return <TodoForm edit={edit} onSubmit={submitUpdate} />
-    }
+    return <>
+        {edit._id ? (<Modal edit={edit} onClose={() => setEdit({ modal: false })} onSubmit={submitUpdate} />) : null}
+        {todos.map((todo, index) => (
+            <div className={todo.isComplete ? 'todo-row complete' : 'todo-row'} key={index}>
 
-    return todos.map((todo, index) => (
-        <div className={todo.isComplete ? 'todo-row complete' : 'todo-row'} key={index}>
+                <div key={index} onClick={() => completeTodo(todo._id)}>
+                    {todo.todoName}
+                </div>
+                <div className='icons'>
+                    <RiCloseCircleLine onClick={() => removeTodo(todo._id)}
+                        className='delete-icon' />
+                    <TiEdit onClick={() => setEdit({ _id: todo._id, todoName: todo.todoName, userId: todo.userId, todoPriority: todo.todoPriority, todoImg: todo.todoImg, modal: true })}
+                        className='edit-icon' />
+                </div>
 
-            <div key={todo.id} onClick={() => completeTodo(todo.id)}>
-                {todo.text}
             </div>
-            <div className='icons'>
-                <RiCloseCircleLine onClick={() => removeTodo(todo.id)}
-                    className='delete-icon' />
-                <TiEdit onClick={() => setEdit({ id: todo.id, value: todo.text })}
-                    className='edit-icon' />
-            </div>
-
-        </div>
-    ));
+        ))}
+    </>
 }
 
 

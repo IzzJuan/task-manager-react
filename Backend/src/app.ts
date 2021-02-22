@@ -5,6 +5,8 @@ import passport from 'passport';
 import passportMiddleware from './middlewares/passport'
 
 import authRoutes from './routes/auth.routes'
+import todoRoutes from './routes/todo.routes'
+import imgUploadRoutes from './routes/imgUpload.routes'
 import privateRoutes from './routes/private.routes'
 
 const app = express();
@@ -23,6 +25,8 @@ app.get('/', (req, res) => {
 });
 
 app.use(authRoutes);
+app.use(todoRoutes);
+app.use(imgUploadRoutes);
 app.use(privateRoutes);
 
 export default app;

@@ -1,0 +1,77 @@
+.MODAL_STYLES{
+    position: fixed;
+    display: flex;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 50px;
+    z-index: 1000;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 620px;
+    min-height: 500px;
+    background: #161a2b;
+    text-align: center;
+    border-radius: 10px;
+    padding-bottom: 32px;
+}
+
+.OVERLAY_STYLE{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .7);
+    z-index: 1000;
+}
+
+.ButtonUI{
+	text-align: right !important;   
+	border-radius:28px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:7px 31px;
+	text-decoration:none;
+	
+}
+
+.Green{
+    background-color:#20c94d;
+    border:1px solid #20c94d;
+    text-shadow:0px 1px 0px #20c94d;
+}
+
+.Yellow{
+    background-color:#ebca12;
+    border:1px solid #ebca12;
+    text-shadow:0px 1px 0px #ebca12;
+}
+
+.Red{
+    background-color:#e01c1c;
+    border:1px solid #e01c1c;
+    text-shadow:0px 1px 0px #e01c1c;
+}
+
+.modalForm{
+    height: 100%;
+    width: 100%;
+}
+
+.modalForm h3 {
+    color: white;
+}
+
+.datepicker-input{
+    color: white;
+}
+
+.imgdiv{
+    height: 100%;
+    width: 100%;
+}

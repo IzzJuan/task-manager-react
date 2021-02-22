@@ -14,11 +14,12 @@ function LoginForm() {
     //})
 
     const adminUser = {
+        name: 'admin',
         email: 'admin@admin.com',
         password: 'adminmaster'
     }
 
-    const [user, setUser] = useState({ email: '', password: '' });
+    const [user, setUser] = useState({ name: '', email: '', password: '' });
     const [error, setError] = useState('');
     const history = useHistory();
 
@@ -28,14 +29,16 @@ function LoginForm() {
     }
 
     const login = (User) => {
-        history.push("/todo-list");
-        /*if (User.email === adminUser.email && User.password === adminUser.password) {
+
+        if (User.email === adminUser.email && User.password === adminUser.password) {
 
             setUser({
+                name: User.name,
                 email: User.email,
                 password: User.password
-            })
-            cookies.set('email', User.email, { path: "/" });
+            });
+            cookies.set('userName', User.email, { path: "/" });
+            cookies.set('userEmail', User.email, { path: "/" });
             history.push("/todo-list")
         } else {
             fetch(`http://localhost:8080/login/`, {
@@ -51,11 +54,14 @@ function LoginForm() {
                 .then(res => res.json())
                 .then(res => {
                     if (res.token) {
-                        cookies.set('email', User.email, { path: "/" });
-                        cookies.set('id', res.id, { path: "/" });
-                        console.log(cookies.get('id'));
-                        cookies.set('email', res.name, { path: "/" });
+                        cookies.set('userId', res._id, { path: "/" });
+                        cookies.set('userName', res.name, { path: "/" });
+                        cookies.set('userEmail', res.email, { path: "/" });
+                        console.log(cookies.get('userId'));
+                        console.log(cookies.get('userName'));
+                        console.log(cookies.get('userEmail'));
                         setUser({
+                            name: User.name,
                             email: User.email
                         })
                         history.push("/todo-list");
@@ -67,7 +73,7 @@ function LoginForm() {
                 }).catch(err => {
                     console.log(err)
                 })
-        }*/
+        }
     }
 
     return (
@@ -84,7 +90,7 @@ function LoginForm() {
                         <input type='password' name='password' id='password' onChange={(e) => setUser({ ...user, password: e.target.value })} value={user.password || ''} />
                     </div>
                     <input type='submit' value='Login' />
-                    {/*<input type="button" onclick={history.push("/signup")} value="Go to Signup" />*/}
+                    <input type="button" onClick={() => { history.push("/signup") }} value="Go to Signup" />
                 </div>
             </form>
         </div>

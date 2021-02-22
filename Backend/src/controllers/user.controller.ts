@@ -20,7 +20,7 @@ export const signup = async (req: Request, res: Response): Promise<Response> => 
     const newUser = new User(req.body);
     await newUser.save();
 
-    return res.status(201).json({ id: newUser._id });
+    return res.status(201).json(newUser);
 }
 
 export const login = async (req: Request, res: Response) => {
@@ -36,7 +36,7 @@ export const login = async (req: Request, res: Response) => {
     const isMatch = await user.comparePassword(req.body.password);
 
     if (isMatch) {
-        return res.status(200).json({ token: createToken(user), id: user._id, name: user.name });
+        return res.status(200).json({ token: createToken(user), _id: user._id, name: user.name, email: user.email });
     }
 
     return res.status(400).json({ msg: 'correo o contraseña no coinciden' })

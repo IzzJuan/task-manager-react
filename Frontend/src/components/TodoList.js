@@ -1,41 +1,78 @@
 import '../css/Todo.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Todo from './Todo';
 import TodoForm from './TodoForm';
+import Cookies from 'universal-cookie';
 
+const cookies = new Cookies();
 
 function TodoList() {
+
     const [todos, setTodos] = useState([]);
 
+    useEffect(() => {
+        fetch('http://localhost:8080/get-todos', {
+            method: 'POST',
+            body: JSON.stringify({
+                userId: cookies.get('userId'),
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                setTodos(res.reverse());
+            })
+    }, [])
+
     const addTodo = (todo) => {
-        if (!todo.text || /^\s*$/.test(todo.text)) {
+        if (!todo.todoName || /^\s*$/.test(todo.todoName)) {
             return;
         }
-
         const newTodos = [todo, ...todos];
 
         setTodos(newTodos);
-        console.log(todo, ...todos);
     }
 
     const updateTodo = (todoId, newValue) => {
-        if (!newValue.text || /^\s*$/.test(newValue.text)) {
+        if (!newValue.todoName || /^\s*$/.test(newValue.todoName)) {
             return;
         }
-
-        setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)))
-
+        console.log(newValue);
+        setTodos(prev => prev.map(item => (item._id === todoId ? newValue : item)))
+        fetch(`http://localhost:8080/update-todo`, {
+            method: 'POST',
+            body: JSON.stringify({
+                _id: newValue._id,
+                todoName: newValue.todoName,
+                todoPriority: newValue.todoPriority,
+                todoImg: newValue.todoImg
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
     }
 
-    const removeTodo = id => {
-        const removeArr = [...todos].filter(todo => todo.id !== id);
+    const removeTodo = _id => {
+        fetch(`http://localhost:8080/delete-todo`, {
+            method: 'POST',
+            body: JSON.stringify({
+                _id
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const removeArr = [...todos].filter(todo => todo._id !== _id);
         setTodos(removeArr);
     }
 
 
-    const completeTodo = id => {
+    const completeTodo = _id => {
         let updatedTodos = todos.map(todo => {
-            if (todo.id === id) {
+            if (todo._id === _id) {
                 todo.isComplete = !todo.isComplete;
             }
             return todo;
@@ -45,15 +82,17 @@ function TodoList() {
 
 
     return (
-        <div className="todo-app">
-            <div>
-                <h1>Que haremos hoy?</h1>
-                <TodoForm onSubmit={addTodo} />
-                <Todo todos={todos}
-                    completeTodo={completeTodo}
-                    removeTodo={removeTodo}
-                    updateTodo={updateTodo}
-                />
+        <div>
+            <div className="todo-app">
+                <div>
+                    <h1>Hola {cookies.get('userName')}! ¿Que haremos hoy?</h1>
+                    <TodoForm onSubmit={addTodo} />
+                    <Todo todos={todos}
+                        completeTodo={completeTodo}
+                        removeTodo={removeTodo}
+                        updateTodo={updateTodo}
+                    />
+                </div>
             </div>
         </div>
     )

@@ -9,6 +9,8 @@ const cors_1 = __importDefault(require("cors"));
 const passport_1 = __importDefault(require("passport"));
 const passport_2 = __importDefault(require("./middlewares/passport"));
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
+const todo_routes_1 = __importDefault(require("./routes/todo.routes"));
+const imgUpload_routes_1 = __importDefault(require("./routes/imgUpload.routes"));
 const private_routes_1 = __importDefault(require("./routes/private.routes"));
 const app = express_1.default();
 app.set('port', process.env.PORT || 8080);
@@ -22,5 +24,7 @@ app.get('/', (req, res) => {
     res.send('API funcionando!');
 });
 app.use(auth_routes_1.default);
+app.use(todo_routes_1.default);
+app.use(imgUpload_routes_1.default);
 app.use(private_routes_1.default);
 exports.default = app;

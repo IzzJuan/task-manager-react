@@ -29,7 +29,7 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     const newUser = new user_1.default(req.body);
     yield newUser.save();
-    return res.status(201).json({ id: newUser._id });
+    return res.status(201).json(newUser);
 });
 exports.signup = signup;
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -42,7 +42,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     const isMatch = yield user.comparePassword(req.body.password);
     if (isMatch) {
-        return res.status(200).json({ token: createToken(user), id: user._id, name: user.name });
+        return res.status(200).json({ token: createToken(user), _id: user._id, name: user.name, email: user.email });
     }
     return res.status(400).json({ msg: 'correo o contraseña no coinciden' });
 });
