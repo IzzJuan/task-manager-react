@@ -41,7 +41,7 @@ function LoginForm() {
             cookies.set('userEmail', User.email, { path: "/" });
             history.push("/todo-list")
         } else {
-            fetch(`http://localhost:8080/login/`, {
+            fetch(`http://35.237.174.137:8080/login/`, {
                 method: 'POST',
                 body: JSON.stringify({
                     email: User.email,

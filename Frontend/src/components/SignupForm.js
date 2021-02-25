@@ -15,7 +15,7 @@ function SignupForm() {
     }
 
     const signup = (User) => {
-        fetch(`http://localhost:8080/signup/`, {
+        fetch(`http://35.237.174.137:8080/signup/`, {
             method: 'POST',
             body: JSON.stringify({
                 name: User.name,

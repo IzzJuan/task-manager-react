@@ -15,7 +15,7 @@ function Modal(props) {
     const [colorButton, setColorButton] = useState({ color: 'Green', priority: 'Baja' })
     const [file, setFile] = useState('');
     const [fileName, setFileName] = useState('Choose File');
-    const [uploadedFile, setUploadedFile] = useState(props.edit ? { filePath: props.edit.todoImg } : '');
+    const [uploadedFile, setUploadedFile] = useState(props.edit.todoImg ? { filePath: props.edit.todoImg } : '');
     const [message, setMessage] = useState('');
     const [uploadPercentage, setUploadPercentage] = useState(0);
 
@@ -51,7 +51,7 @@ function Modal(props) {
         formData.append('file', file);
 
         try {
-            const res = await axios.post('http://localhost:8080/imageupload', formData, {
+            const res = await axios.post('http://35.237.174.137:8080/imageupload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }, onUploadProgress: ProgressEvent => {
@@ -138,7 +138,6 @@ function Modal(props) {
                         </div>
                         <ProgresBar percentage={uploadPercentage} />
                         <div className='row mb-3'>
-
                             {uploadedFile ? <div className='row mt-5'>
                                 <div className='col-md-6 m-auto'>
                                     <h3 className='text-center'>{uploadedFile.fileName}</h3>

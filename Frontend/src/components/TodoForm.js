@@ -23,7 +23,7 @@ function TodoForm(props) {
 
     const addTodo = () => {
 
-        fetch(`http://localhost:8080/add-todo/`, {
+        fetch(`http://35.237.174.137:8080/add-todo/`, {
             method: 'POST',
             body: JSON.stringify({
                 todoName: input,

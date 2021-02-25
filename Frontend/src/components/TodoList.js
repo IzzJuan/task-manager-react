@@ -11,7 +11,7 @@ function TodoList() {
     const [todos, setTodos] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:8080/get-todos', {
+        fetch('http://35.237.174.137:8080/get-todos', {
             method: 'POST',
             body: JSON.stringify({
                 userId: cookies.get('userId'),
@@ -40,7 +40,7 @@ function TodoList() {
             return;
         }
         setTodos(prev => prev.map(item => (item._id === todoId ? editedTodo : item)))
-        fetch(`http://localhost:8080/update-todo`, {
+        fetch(`http://35.237.174.137:8080/update-todo`, {
             method: 'POST',
             body: JSON.stringify({
                 _id: editedTodo._id,
@@ -55,7 +55,7 @@ function TodoList() {
     }
 
     const removeTodo = _id => {
-        fetch(`http://localhost:8080/delete-todo`, {
+        fetch(`http://35.237.174.137:8080/delete-todo`, {
             method: 'POST',
             body: JSON.stringify({
                 _id
